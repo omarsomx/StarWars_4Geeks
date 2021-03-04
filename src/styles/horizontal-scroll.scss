@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/bootstrap";
+.card-deck-scrollable{
+  @extend .card-deck;
+  flex-direction: row;
+
+  & > .card{
+    @extend .mx-3;
+    flex: 0 0 40% !important;/*Change to any size you want*/
+    max-width: 40%;
+  }
+}

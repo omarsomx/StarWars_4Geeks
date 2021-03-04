@@ -8,3 +8,7 @@ tasks:
         cp .env.example .env
       command: >
         npm i vercel -g
+
+vscode:
+  extensions:
+    - dsznajder.es7-react-js-snippets@3.1.0:MJ/bfyCCPMdDGtAC1ZzGOQ==
