@@ -1,4 +1,4 @@
-const BASE_URL = "https://www.swapi.tech/api/";
+const BASE_URL = "https://www.swapi.tech/api";
 
 export const urlCharacters = BASE_URL + "/people";
 export const urlPlanets = BASE_URL + "/planets";
