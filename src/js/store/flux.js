@@ -5,25 +5,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			people: null,
 			planets: null,
-			vehicles: null,
-			favorites: []
+			vehicles: null
 		},
 		actions: {
-			loadCharacters: url => {
-				fetch(url)
-					.then(response => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then(data => {
-						if (data) {
-							getActions().saveCharacters(data);
-						}
-					})
-					.catch(err => console.error(err));
-			},
-			saveCharacters: newResponse => {
+			addCharacters: newResponse => {
 				let oldResponse = getStore().people;
 				let oldResponseResults = getStore().people ? getStore().people.results : [];
 
@@ -33,22 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				newResponse.results = [...oldResponseResults, ...newResponse.results];
 				setStore({ people: newResponse });
 			},
-
-			loadPlanets: url => {
-				fetch(url)
-					.then(response => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then(data => {
-						if (data) {
-							getActions().savePlanets(data);
-						}
-					})
-					.catch(err => console.error(err));
-			},
-			savePlanets: newResponse => {
+			addPlanets: newResponse => {
 				let oldResponse = getStore().planets;
 				let oldResponseResults = getStore().planets ? getStore().planets.results : [];
 
@@ -58,21 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				newResponse.results = [...oldResponseResults, ...newResponse.results];
 				setStore({ planets: newResponse });
 			},
-			loadVehicles: url => {
-				fetch(url)
-					.then(response => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then(data => {
-						if (data) {
-							getActions().saveVehicles(data);
-						}
-					})
-					.catch(err => console.error(err));
-			},
-			saveVehicles: newResponse => {
+			addVehicles: newResponse => {
 				let oldResponse = getStore().vehicles;
 				let oldResponseResults = getStore().vehicles ? getStore().vehicles.results : [];
 

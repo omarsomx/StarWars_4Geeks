@@ -5,14 +5,21 @@ import TatooineImg from "../../img/tatooinePlanet.jpg";
 import Loading from "../component/loading";
 import "../../styles/horizontal-scroll.scss";
 import PropertiesPlanet from "../component/propertiesPlanet";
+import { makeFetch } from "../component/functions";
 
 function Planets() {
 	const { store, actions } = useContext(Context);
-	function nextPlanets() {
-		actions.loadPlanets(store.planets.next);
-	}
 
-	let paginar = store.planets ? store.planets.next : null;
+	function nextPlanets() {
+		makeFetch(store.planets.next)
+			.then(response => {
+				if (response) {
+					actions.addPlanets(response);
+				}
+			})
+			.catch(err => console.error(err));
+	}
+	let urlNextPagination = store.planets ? store.planets.next : null;
 
 	return (
 		<div>
@@ -38,7 +45,7 @@ function Planets() {
 					) : (
 						<Loading />
 					)}
-					{paginar ? (
+					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextPlanets}>
 							<i className="fas fa-plus-circle text-muted" />
 						</button>

@@ -6,15 +6,22 @@ import PropertiesCharacter from "../component/propertiesCharacter";
 import starWarsImg from "../../img/star001.jpeg";
 import "../../styles/horizontal-scroll.scss";
 import Navbar from "../component/navbar";
+import { makeFetch } from "../component/functions";
 
 function Characters() {
 	const { store, actions } = useContext(Context);
 
 	function nextCharacters() {
-		actions.loadCharacters(store.people.next);
+		makeFetch(store.people.next)
+			.then(response => {
+				if (response) {
+					actions.addCharacters(response);
+				}
+			})
+			.catch(err => console.error(err));
 	}
 
-	let paginar = store.people ? store.people.next : null;
+	let urlNextPagination = store.people ? store.people.next : null;
 
 	return (
 		<div>
@@ -40,7 +47,7 @@ function Characters() {
 					) : (
 						<Loading />
 					)}
-					{paginar ? (
+					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextCharacters}>
 							<i className="fas fa-plus-circle text-muted" />
 						</button>

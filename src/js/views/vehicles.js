@@ -5,15 +5,22 @@ import Loading from "../component/loading";
 import millenniumfalconImg from "../../img/millennium-falcon.jpg";
 import "../../styles/horizontal-scroll.scss";
 import PropertiesVehicle from "../component/propertiesVehicle";
+import { makeFetch } from "../component/functions";
 
 function Vehicles() {
 	const { store, actions } = useContext(Context);
 
 	function nextVehicles() {
-		actions.loadVehicles(store.vehicles.next);
+		makeFetch(store.vehicles.next)
+			.then(response => {
+				if (response) {
+					actions.addVehicles(response);
+				}
+			})
+			.catch(err => console.error(err));
 	}
 
-	let paginar = store.vehicles ? store.vehicles.next : null;
+	let urlNextPagination = store.vehicles ? store.vehicles.next : null;
 
 	return (
 		<div>
@@ -39,7 +46,7 @@ function Vehicles() {
 					) : (
 						<Loading />
 					)}
-					{paginar ? (
+					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextVehicles}>
 							<i className="fas fa-plus-circle text-muted" />
 						</button>

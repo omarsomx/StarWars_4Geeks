@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
+import { makeFetch } from "../component/functions";
 import { urlCharacters, urlPlanets, urlVehicles } from "../component/helpers.js";
 
 // Don't change, here is where we initialize our context, by default it's just going to be null.
@@ -23,9 +24,21 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.loadCharacters(urlCharacters);
-			state.actions.loadPlanets(urlPlanets);
-			state.actions.loadVehicles(urlVehicles);
+			makeFetch(urlCharacters).then(response => {
+				if (response) {
+					state.actions.addCharacters(response);
+				}
+			});
+			makeFetch(urlPlanets).then(response => {
+				if (response) {
+					state.actions.addPlanets(response);
+				}
+			});
+			makeFetch(urlVehicles).then(response => {
+				if (response) {
+					state.actions.addVehicles(response);
+				}
+			});
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
